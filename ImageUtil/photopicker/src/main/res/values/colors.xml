@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="photo_picker_color_000000">#000000</color>
+    <color name="photo_picker_black_overlay">#66000000</color>
+    <color name="photo_picker_color_3D3D3E">#3D3D3E</color>
+    <color name="photo_picker_color_EDEDEE">#EDEDEE</color>
+    <color name="photo_picker_color_EDEDED">#EDEDED</color>
+    <color name="photo_picker_color_white">#FFFFFF</color>
+    <color name="photo_picker_color_FF6C00">#FF6C00</color>
+    <color name="photo_picker_color_3C3C3C">#3C3C3C</color>
+    <color name="photo_picker_color_999999">#999999</color>
+    <color name="photo_picker_color_DDDDDD">#dddddd</color>
+    <color name="photo_picker_color_80000000">#80000000</color>
+    <color name="photo_picker_color_99000000">#99000000</color>
+</resources>

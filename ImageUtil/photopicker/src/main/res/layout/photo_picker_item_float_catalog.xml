@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="86dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="@dimen/photo_picker_dimen_10dp"
+    android:paddingRight="@dimen/photo_picker_dimen_10dp">
+
+    <FrameLayout
+        android:id="@+id/id_photo_avatar"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/photo_picker_dimen_10dp"
+        android:layout_marginRight="@dimen/photo_picker_dimen_10dp"
+        android:background="@drawable/photo_picker_common_folder_bg">
+
+        <ImageView
+            android:id="@+id/item_photo_folder_img_ci"
+            android:scaleType="centerCrop"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_gravity="top|left" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/id_photo_avatar"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_photo_folder_name_tv"
+            android:textSize="@dimen/photo_picker_dimen_18sp"
+            android:textColor="@color/photo_picker_color_3C3C3C"
+            tools:text="Camera" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/photo_picker_color_999999"
+            android:id="@+id/item_photo_folder_num_tv"
+            android:layout_marginTop="@dimen/photo_picker_dimen_10dp"
+            tools:text="69张" />
+    </LinearLayout>
+
+    <com.demo.photopicker.view.PhotoPickerCircleColorView
+        android:id="@+id/item_photo_folder_checked_cc"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/photo_picker_dimen_10dp"
+        app:cicleColor_fillColor="@color/photo_picker_color_3C3C3C"
+        app:cicleColor_intervalColor="@color/photo_picker_color_white"/>
+
+    <View
+        android:background="@color/photo_picker_color_DDDDDD"
+        android:layout_height="@dimen/photo_picker_dimen_1px"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp" />
+</RelativeLayout>

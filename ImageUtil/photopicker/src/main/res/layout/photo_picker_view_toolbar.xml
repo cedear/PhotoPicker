@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/photo_picker_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/photo_picker_dimen_44dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/photo_picker_color_3D3D3E"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/view_title_bar_back_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/photo_picker_ic_back"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/photo_picker_dimen_15dp"
+        android:background="@null"
+        android:scaleType="centerInside" />
+
+    <View
+        android:layout_width="@dimen/photo_picker_dimen_1px"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/photo_picker_dimen_10dp"
+        android:layout_toRightOf="@id/view_title_bar_back_button"
+        android:background="@color/photo_picker_color_000000" />
+
+    <TextView
+        android:id="@+id/view_title_bar_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/view_title_bar_back_button"
+        android:textColor="@color/photo_picker_color_EDEDED"
+        android:textSize="@dimen/photo_picker_dimen_15sp"
+        android:layout_marginLeft="@dimen/photo_picker_dimen_21dp"
+        tools:text="全部视频" />
+
+    <TextView
+        android:id="@+id/view_title_bar_select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="@dimen/photo_picker_dimen_15sp"
+        android:background="@drawable/photo_picker_shape_r_48b14b"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="3dp"
+        android:paddingLeft="@dimen/photo_picker_dimen_15dp"
+        android:paddingRight="@dimen/photo_picker_dimen_15dp"
+        android:paddingTop="4dp"
+        android:text="发送"
+        android:textColor="@color/photo_picker_color_white"
+        android:layout_marginRight="@dimen/photo_picker_dimen_15dp"
+        />
+
+</RelativeLayout>

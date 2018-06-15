@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="photo_picker_dimen_44dp">44dp</dimen>
+    <dimen name="photo_picker_dimen_15dp">15dp</dimen>
+    <dimen name="photo_picker_dimen_15sp">15sp</dimen>
+    <dimen name="photo_picker_dimen_10dp">10dp</dimen>
+
+    <dimen name="photo_picker_dimen_1px">1px</dimen>
+    <dimen name="photo_picker_dimen_21dp">21dp</dimen>
+    <dimen name="photo_picker_dimen_18sp">18sp</dimen>
+    <dimen name="photo_picker_dimen_20dp">20dp</dimen>
+    <dimen name="photo_picker_dimen_80dp">80dp</dimen>
+    <dimen name="photo_picker_dimen_50dp">50dp</dimen>
+</resources>

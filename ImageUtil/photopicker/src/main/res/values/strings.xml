@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">photopicker</string>
+    <string name="photo_picker_preview">预览</string>
+    <string name="photo_picker_all_photo">全部图片</string>
+    <string name="photo_picker_choose">选择</string>
+    <string name="photo_picker_take_photo">拍摄照片</string>
+    <string name="photo_picker_send">发送</string>
+    <string name="photo_picker_write_external_permission_failed">写存储卡权限申请失败</string>
+    <string name="photo_picker_take_photo_permission_failed">拍照权限申请失败</string>
+    <string name="photo_picker_take_photo_error">请先开启相机</string>
+    <string name="photo_picker_take_photo_fail">拍照失败</string>
+    <string name="photo_picker_take_photo_cancel">拍照失败</string>
+</resources>

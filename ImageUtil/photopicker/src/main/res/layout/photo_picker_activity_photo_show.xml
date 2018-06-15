@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/photo_picker_color_000000">
+
+    <include layout="@layout/photo_picker_view_toolbar"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/photo_picker_activity_image_show_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/photo_picker_black_overlay"
+        android:layout_marginTop="@dimen/photo_picker_dimen_44dp"
+        android:layout_marginBottom="@dimen/photo_picker_dimen_44dp"
+        />
+    <com.demo.photopicker.view.FloatCatalogView
+        android:id="@+id/photo_picker_activity_image_show_float_catalog_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/photo_picker_dimen_44dp"
+        android:layout_marginBottom="@dimen/photo_picker_dimen_44dp"/>
+
+    <RelativeLayout
+        android:id="@+id/photo_picker_activity_image_show_catalog_and_preview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/photo_picker_dimen_44dp"
+        android:background="@color/photo_picker_color_3D3D3E"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/photo_picker_dimen_15dp"
+            android:layout_alignParentLeft="true"
+            >
+
+            <TextView
+                android:id="@+id/photo_picker_activity_image_show_catalog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/photo_picker_color_EDEDEE"
+                android:textSize="@dimen/photo_picker_dimen_15sp"
+                android:drawableRight="@drawable/photo_picker_shape_triangle_bg"
+                tools:text="目录" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/photo_picker_activity_image_show_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/photo_picker_dimen_15sp"
+            android:layout_marginRight="@dimen/photo_picker_dimen_10dp"
+            android:textColor="@color/photo_picker_color_EDEDED"
+            android:gravity="center"
+            android:alpha="0.5"
+            android:enabled="false"
+            android:layout_alignParentRight="true"
+            android:text="@string/photo_picker_preview"
+            android:background="@null"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

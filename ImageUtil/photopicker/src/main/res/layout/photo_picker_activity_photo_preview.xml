@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/photo_picker_color_000000"
+    >
+
+    <com.demo.photopicker.view.PhotoPreviewViewPager
+        android:id="@+id/activity_photo_preview_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/photo_picker_color_000000"/>
+
+    <include layout="@layout/photo_picker_view_toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/activity_photo_preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/photo_picker_dimen_44dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/photo_picker_color_99000000"
+            >
+            <RelativeLayout
+                android:id="@+id/activity_photo_preview_choose_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <ImageButton
+                    android:id="@+id/activity_photo_preview_checkbox"
+                    android:layout_width="@dimen/photo_picker_dimen_20dp"
+                    android:layout_height="@dimen/photo_picker_dimen_20dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/photo_picker_bg_checkbox_selector" />
+
+                <TextView
+                    android:id="@+id/photo_preview_activity_choose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/photo_picker_dimen_15sp"
+                    android:layout_toRightOf="@id/activity_photo_preview_checkbox"
+                    android:layout_marginRight="@dimen/photo_picker_dimen_15dp"
+                    android:textColor="@color/photo_picker_color_EDEDED"
+                    android:layout_marginLeft="@dimen/photo_picker_dimen_10dp"
+                    android:gravity="center"
+                    android:alpha="0.5"
+                    android:enabled="false"
+                    android:layout_centerVertical="true"
+                    android:text="@string/photo_picker_choose"
+                    android:background="@null"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activity_photo_preview_thumbnail_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/photo_picker_dimen_80dp"
+            android:background="@color/photo_picker_color_99000000"
+            android:paddingTop="@dimen/photo_picker_dimen_15dp"
+            android:paddingBottom="@dimen/photo_picker_dimen_15dp"
+            android:paddingLeft="@dimen/photo_picker_dimen_10dp"
+            android:paddingRight="@dimen/photo_picker_dimen_10dp"
+            android:visibility="gone"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_photo_preview_thumbnail_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

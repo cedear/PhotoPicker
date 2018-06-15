@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/photo_picker_dimen_15dp"
+    >
+    <ImageView
+        android:id="@+id/preview_thumbnail_image_view"
+        android:layout_width="@dimen/photo_picker_dimen_50dp"
+        android:layout_height="@dimen/photo_picker_dimen_50dp"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true"
+       />
+    <FrameLayout
+        android:id="@+id/preview_thumbnail_mask"
+        android:layout_width="@dimen/photo_picker_dimen_50dp"
+        android:layout_height="@dimen/photo_picker_dimen_50dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/photo_picker_shape_r_2dp_ff6c00"/>
+</RelativeLayout>
