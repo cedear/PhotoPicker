@@ -20,9 +20,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        maven {
-            url 'file://Users/bjhl/baijia-maven/maven-master'
-        }
     }
 }
 
