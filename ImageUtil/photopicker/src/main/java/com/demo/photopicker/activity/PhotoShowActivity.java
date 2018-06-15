@@ -1,7 +1,9 @@
 package com.demo.photopicker.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.demo.photopicker.PhotoPicker;
@@ -24,7 +27,7 @@ import de.greenrobot.event.EventBus;
 
 public class PhotoShowActivity extends AppCompatActivity implements PhotoShowContract.View{
 
-    private ImageButton imgBtBack;
+    private RelativeLayout imgBtBack;
     private TextView tvTitle;
     private TextView tvSend;
     private RecyclerView cyPhotoList;
@@ -92,11 +95,13 @@ public class PhotoShowActivity extends AppCompatActivity implements PhotoShowCon
         presenter.getPhotoList(this);
     }
 
+    @SuppressLint("WrongViewCast")
     private void initView() {
-        imgBtBack = (ImageButton) findViewById(R.id.view_title_bar_back_button);
+        imgBtBack = findViewById(R.id.view_title_bar_back_button);
         tvTitle = (TextView) findViewById(R.id.view_title_bar_title_tv);
         tvSend = (TextView) findViewById(R.id.view_title_bar_select_button);
-        tvSend.setBackgroundColor(PhotoPicker.getThemeColor());
+        GradientDrawable gradientDrawable = (GradientDrawable) tvSend.getBackground();
+        gradientDrawable.setColor(PhotoPicker.getThemeColor(this));
         tvSend.setAlpha(0.5f);
         tvSend.setEnabled(false);
         cyPhotoList = (RecyclerView) findViewById(R.id.photo_picker_activity_image_show_recycler_view);

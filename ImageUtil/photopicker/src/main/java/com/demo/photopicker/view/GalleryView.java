@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baijiahulian.common.permission.AppPermissions;
 import com.bumptech.glide.Glide;
 import com.demo.photopicker.R;
 import com.demo.photopicker.adapter.GalleryPhotoAdapter;
@@ -32,11 +31,11 @@ import com.demo.photopicker.download.GalleryDownloadThread;
 import com.demo.photopicker.model.GalleryPhotoParameterModel;
 import com.demo.photopicker.photointerface.GalleryPhotoInterface;
 import com.demo.photopicker.util.GalleryScreenUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.functions.Action1;
 
 /**
  * Created by bjhl on 2018/6/7.
@@ -67,6 +66,8 @@ public class GalleryView extends RelativeLayout {
     private GalleryPhotoAdapter adapter;
     private final static int WHAT_SAVE_SUCCESS = 1;
     private final static int WHAT_SAVE_FAILED = 2;
+    private RxPermissions rxPermissions;
+
     private OnGalleryViewFadedListener galleryViewFadedListener;
     private android.os.Handler handler = new android.os.Handler() {
         @Override
@@ -335,18 +336,19 @@ public class GalleryView extends RelativeLayout {
     }
 
     private void checkPermission(final Activity activity) {
-        if (AppPermissions.newPermissions(activity).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (rxPermissions == null) {
+            rxPermissions = new RxPermissions(activity);
+        }
+        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             saveBitmapToLocation();
         } else {
-            AppPermissions.newPermissions(activity).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new Action1<Boolean>() {
-                        @Override
-                        public void call(Boolean aBoolean) {
-                            if (aBoolean) {
-                                saveBitmapToLocation();
-                            } else {
-                                Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
-                            }
+            rxPermissions
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            saveBitmapToLocation();
+                        } else {
+                            Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
                         }
                     });
         }

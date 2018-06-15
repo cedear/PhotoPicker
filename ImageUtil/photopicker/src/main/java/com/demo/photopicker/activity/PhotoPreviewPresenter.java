@@ -103,8 +103,4 @@ public class PhotoPreviewPresenter implements PhotoPreviewContract.Presenter {
     public int getCurrentPositionInViewPager() {
         return currentPositionInViewPager;
     }
-
-
-
-
 }

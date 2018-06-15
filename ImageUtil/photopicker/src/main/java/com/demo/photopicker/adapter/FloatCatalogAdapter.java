@@ -57,6 +57,7 @@ public class FloatCatalogAdapter extends RecyclerView.Adapter<FloatCatalogAdapte
         holder.picNumber.setText(folderInfo.getPhotoList().size() + "张");
 
         //目录item点击，小圆点的显示
+        holder.checkedView.setColor(PhotoPicker.getThemeColor(context));
         if (mSelectedPosition == position) {
             holder.checkedView.setVisibility(View.VISIBLE);
         } else {
@@ -99,9 +100,7 @@ public class FloatCatalogAdapter extends RecyclerView.Adapter<FloatCatalogAdapte
             folderName = (TextView) itemView.findViewById(R.id.item_photo_folder_name_tv);
             picNumber = (TextView) itemView.findViewById(R.id.item_photo_folder_num_tv);
             checkedView = (PhotoPickerCircleColorView) itemView.findViewById(R.id.item_photo_folder_checked_cc);
-
             checkedView.setSelected(true);
-            checkedView.setColor(PhotoPicker.getThemeColor());
         }
     }
 

@@ -10,4 +10,5 @@
     <string name="photo_picker_take_photo_error">请先开启相机</string>
     <string name="photo_picker_take_photo_fail">拍照失败</string>
     <string name="photo_picker_take_photo_cancel">拍照失败</string>
+    <string name="photo_picker_not_in_this_folder">所选图不在此相册</string>
 </resources>

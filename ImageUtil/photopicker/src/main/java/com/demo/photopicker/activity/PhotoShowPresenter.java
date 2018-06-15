@@ -4,13 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.baijiahulian.common.permission.AppPermissions;
 import com.demo.photopicker.R;
 import com.demo.photopicker.model.PhotoFolderInfo;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
-
-import rx.functions.Action1;
 
 import static com.demo.photopicker.util.PhotoUtil.getAllPhotoFolder;
 
@@ -20,6 +18,7 @@ import static com.demo.photopicker.util.PhotoUtil.getAllPhotoFolder;
 
 public class PhotoShowPresenter implements PhotoShowContract.Presenter {
     private PhotoShowContract.View view;
+    private RxPermissions rxPermissions;
 
     public PhotoShowPresenter(PhotoShowContract.View view) {
         this.view = view;
@@ -28,21 +27,24 @@ public class PhotoShowPresenter implements PhotoShowContract.Presenter {
     @Override
     public void getPhotoList(final Activity activity) {
         final ArrayList<PhotoFolderInfo> list = new ArrayList<>();
-        if (AppPermissions.newPermissions(activity).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+        if (rxPermissions == null) {
+            rxPermissions = new RxPermissions(activity);
+        }
+        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             list.addAll(getAllPhotoFolder(activity));
+            view.onGetPhotoListSuccess(list);
         } else {
-            AppPermissions.newPermissions(activity).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new Action1<Boolean>() {
-                        @Override
-                        public void call(Boolean aBoolean) {
-                            if (aBoolean) {
-                                list.addAll(getAllPhotoFolder(activity));
-                            } else {
-                                Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
-                            }
+            rxPermissions
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            list.addAll(getAllPhotoFolder(activity));
+                            view.onGetPhotoListSuccess(list);
+                        } else {
+                            Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
                         }
                     });
         }
-        view.onGetPhotoListSuccess(list);
     }
 }

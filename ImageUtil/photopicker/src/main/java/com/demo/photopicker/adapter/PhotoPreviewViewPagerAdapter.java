@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.demo.photopicker.PhotoPicker;
 import com.demo.photopicker.model.PhotoInfo;
 import com.demo.photopicker.view.PhotoPreviewGalleryView;
 
@@ -70,12 +71,14 @@ public class PhotoPreviewViewPagerAdapter extends PagerAdapter {
     }
 
     public int getPhotoInfoPosition(PhotoInfo photoInfo) {
+        int position = PhotoPicker.THUMBNAIL_POSITION_CANT_REACH;
         for (int i = 0 ; i < dataList.size() ; i++) {
             if (photoInfo.getPhotoPath().equals(dataList.get(i).getPhotoPath())) {
-                return i;
+                position = i;
+                break;
             }
         }
-        return 0;
+        return position;
     }
 
 

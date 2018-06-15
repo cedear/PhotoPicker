@@ -31,7 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:descendantFocusability="blocksDescendants">
 
                 <ImageButton
                     android:id="@+id/activity_photo_preview_checkbox"
@@ -39,6 +40,8 @@
                     android:layout_height="@dimen/photo_picker_dimen_20dp"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:background="@drawable/photo_picker_bg_checkbox_selector" />
 
                 <TextView

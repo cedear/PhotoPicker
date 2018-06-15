@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/photo_picker_activity_image_show_catalog"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:ellipsize="end"
@@ -56,7 +56,7 @@
         <TextView
             android:id="@+id/photo_picker_activity_image_show_preview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:textSize="@dimen/photo_picker_dimen_15sp"
             android:layout_marginRight="@dimen/photo_picker_dimen_10dp"

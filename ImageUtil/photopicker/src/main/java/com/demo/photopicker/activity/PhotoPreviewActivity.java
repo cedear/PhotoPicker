@@ -3,6 +3,7 @@ package com.demo.photopicker.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,7 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPrev
 
     private PhotoPreviewPresenter presenter;
 
-    private ImageButton imgBtBack;
+    private RelativeLayout imgBtBack;
     private TextView tvTitle;
     private TextView tvSend;
     private RelativeLayout titleBarContainer;
@@ -101,6 +102,7 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPrev
                             } else {
                                 thumbnailAdapter.notifyData(presenter.mapToList(PhotoPicker.PHOTO_SELECT_LIST), PhotoPicker.PHOTO_SELECT_LIST.size() - 1);
                             }
+                            thumbnailRecyclerView.scrollToPosition(PhotoPicker.PHOTO_SELECT_LIST.size() - 1);
                         } else {
                             PhotoPicker.PHOTO_SELECT_LIST.remove(currentPhoto.getPhotoPath());
                             if (thumbnailAdapter != null) {
@@ -178,10 +180,11 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPrev
     }
 
     private void initView() {
-        imgBtBack = (ImageButton) findViewById(R.id.view_title_bar_back_button);
+        imgBtBack = findViewById(R.id.view_title_bar_back_button);
         tvTitle = (TextView) findViewById(R.id.view_title_bar_title_tv);
         tvSend = (TextView) findViewById(R.id.view_title_bar_select_button);
-        tvSend.setBackgroundColor(PhotoPicker.getThemeColor());
+        GradientDrawable gradientDrawable = (GradientDrawable) tvSend.getBackground();
+        gradientDrawable.setColor(PhotoPicker.getThemeColor(this));
         titleBarContainer = (RelativeLayout) findViewById(R.id.photo_picker_title_bar);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) titleBarContainer.getLayoutParams();
         params.setMargins(0, ScreenUtil.getStatusBarHeight(this), 0, 0);
@@ -238,7 +241,9 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPrev
                         }
                         //todo 缩略图更改状态
                         if (thumbnailAdapter != null) {
-                            thumbnailAdapter.setCurrentThumbnail(presenter.getViewPagerItemPositionInSelectedList());
+                            int selectedPosition = presenter.getViewPagerItemPositionInSelectedList();
+                            thumbnailAdapter.setCurrentThumbnail(selectedPosition);
+                            thumbnailRecyclerView.scrollToPosition(selectedPosition);
                         }
                     }
                 }

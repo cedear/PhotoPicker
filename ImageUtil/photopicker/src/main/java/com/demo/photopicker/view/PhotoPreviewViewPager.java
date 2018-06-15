@@ -4,6 +4,10 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.Toast;
+
+import com.demo.photopicker.PhotoPicker;
+import com.demo.photopicker.R;
 
 /**
  * Created by bjhl on 2018/6/4.
@@ -64,4 +68,13 @@ public class PhotoPreviewViewPager extends ViewPager {
             listener.onPageSelected(0);
     }
 
+    @Override
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        if (item == PhotoPicker.THUMBNAIL_POSITION_CANT_REACH) {
+            Toast.makeText(getContext(), getContext().getResources().getString(R.string.photo_picker_not_in_this_folder), Toast.LENGTH_LONG).show();
+            return;
+        }
+        super.setCurrentItem(item, smoothScroll);
+
+    }
 }

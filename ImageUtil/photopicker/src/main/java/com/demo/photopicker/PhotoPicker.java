@@ -17,7 +17,7 @@ import java.util.List;
 public class PhotoPicker {
     private static OnGetPhotoPickerCallBack callBack;
     private static int LIMIT_PHOTO_COUNT = 9;
-    private static int THEME_COLOR = R.color.photo_picker_color_FF6C00;
+    private static int THEME_COLOR = 0;
     private static boolean IS_MUTIL_SELECT_TYPE = true;
     private static int PHOTO_LIST_SPAN_COUNT = 4;
     private static boolean isPhotoPreviewWithCamera = false;
@@ -99,7 +99,10 @@ public class PhotoPicker {
             return 1;
     }
 
-    public static int getThemeColor() {
+    public static int getThemeColor(Context context) {
+        if (THEME_COLOR == 0) {
+            return context.getResources().getColor(R.color.photo_picker_color_FF6C00);
+        }
         return THEME_COLOR;
     }
 
@@ -126,7 +129,7 @@ public class PhotoPicker {
         PHOTO_SELECT_LIST.clear();
         callBack = null;
         LIMIT_PHOTO_COUNT = 9;
-        THEME_COLOR = R.color.photo_picker_color_FF6C00;
+        THEME_COLOR = 0;
         IS_MUTIL_SELECT_TYPE = true;
         PHOTO_LIST_SPAN_COUNT = 4;
         isPhotoPreviewWithCamera = false;

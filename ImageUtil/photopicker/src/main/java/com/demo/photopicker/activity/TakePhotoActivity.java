@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.baijiahulian.common.permission.AppPermissions;
 import com.demo.photopicker.PhotoPicker;
 import com.demo.photopicker.R;
 import com.demo.photopicker.model.PhotoInfo;
@@ -21,6 +20,7 @@ import com.demo.photopicker.util.DeviceUtils;
 import com.demo.photopicker.util.MediaScanner;
 import com.demo.photopicker.util.PhotoUtil;
 import com.demo.photopicker.util.RandomUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import rx.functions.Action1;
 
 public class TakePhotoActivity extends AppCompatActivity {
 
@@ -37,6 +36,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String photoPath;
     private Uri mTakePhotoUri;
     private MediaScanner mMediaScanner;
+    private RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +52,20 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private void permissionRequest() {
-        if (AppPermissions.newPermissions(this).isGranted(Manifest.permission.CAMERA)) {
+
+        if (rxPermissions == null) {
+            rxPermissions = new RxPermissions(this);
+        }
+        if (rxPermissions.isGranted(Manifest.permission.CAMERA)) {
             takePhoto();
         } else {
-            AppPermissions.newPermissions(this).request(Manifest.permission.CAMERA)
-                    .subscribe(new Action1<Boolean>() {
-                        @Override
-                        public void call(Boolean aBoolean) {
-                            if (aBoolean) {
-                                takePhoto();
-                            } else {
-                                toast(getString(R.string.photo_picker_take_photo_permission_failed));
-                            }
+            rxPermissions
+                    .request(Manifest.permission.CAMERA)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            takePhoto();
+                        } else {
+                            Toast.makeText(TakePhotoActivity.this, R.string.photo_picker_take_photo_permission_failed, Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -154,7 +156,12 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private boolean reuqestPermissionWriteFile(File file) {
-        if (AppPermissions.newPermissions(this).isGranted(Manifest.permission.CAMERA)) {
+
+        if (rxPermissions == null) {
+            rxPermissions = new RxPermissions(this);
+        }
+
+        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             try {
                 return file.createNewFile();
             } catch (IOException e) {
@@ -162,9 +169,8 @@ public class TakePhotoActivity extends AppCompatActivity {
                 return false;
             }
         } else {
-            AppPermissions.newPermissions(this).request(Manifest.permission.CAMERA);
-            return false;
-
+           rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+           return false;
         }
     }
 

@@ -6,16 +6,26 @@
     android:background="@color/photo_picker_color_3D3D3E"
     android:orientation="horizontal">
 
-    <ImageButton
+    <RelativeLayout
         android:id="@+id/view_title_bar_back_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/photo_picker_ic_back"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/photo_picker_dimen_15dp"
-        android:background="@null"
-        android:scaleType="centerInside" />
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/photo_picker_ic_back"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:focusable="false"
+            android:clickable="false"
+            android:layout_marginLeft="@dimen/photo_picker_dimen_15dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="@dimen/photo_picker_dimen_1px"
