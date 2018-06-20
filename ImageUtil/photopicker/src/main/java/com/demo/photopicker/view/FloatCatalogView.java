@@ -1,5 +1,7 @@
 package com.demo.photopicker.view;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +28,7 @@ public class FloatCatalogView extends FrameLayout {
     private FrameLayout container;
     private RecyclerView cataloglist;
     private FloatCatalogAdapter adapter;
-    private OnCatalogClickLlistener clickLlistener;
+    private OnCatalogClickListener clickLlistener;
 
     public FloatCatalogView(@NonNull Context context) {
         this(context, null);
@@ -43,7 +45,7 @@ public class FloatCatalogView extends FrameLayout {
         initListener();
     }
 
-    public void setClickLlistener(OnCatalogClickLlistener clickLlistener) {
+    public void setClickLlistener(OnCatalogClickListener clickLlistener) {
         this.clickLlistener = clickLlistener;
     }
 
@@ -84,15 +86,39 @@ public class FloatCatalogView extends FrameLayout {
 
     public void toggleFloatCatalog() {
         if (container.getVisibility() == View.VISIBLE) {
-            container.setVisibility(View.GONE);
-            container.startAnimation(AnimationUtils.loadAnimation(context, R.anim.photo_picker_anim_float_up_to_bottom));
+            cataloglist.startAnimation(AnimationUtils.loadAnimation(context, R.anim.photo_picker_anim_float_up_to_bottom));
+            ObjectAnimator animator = ObjectAnimator.ofFloat(container, "alpha",1, 0);
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    container.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            animator.start();
         } else {
             container.setVisibility(View.VISIBLE);
-            container.startAnimation(AnimationUtils.loadAnimation(context, R.anim.photo_picker_anim_float_bottom_to_up));
+            cataloglist.startAnimation(AnimationUtils.loadAnimation(context, R.anim.photo_picker_anim_float_bottom_to_up));
+            ObjectAnimator animator = ObjectAnimator.ofFloat(container, "alpha",0, 1);
+            animator.start();
         }
     }
 
-    public interface OnCatalogClickLlistener {
+    public interface OnCatalogClickListener {
         void onCatalogItemClick(int selectedPosition);
     }
 

@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -167,7 +166,7 @@ public class PhotoShowActivity extends AppCompatActivity implements PhotoShowCon
             cyPhotoList.setAdapter(adapter);
 
             floatCatalogView.setCatalogList(photoList);
-            floatCatalogView.setClickLlistener(new FloatCatalogView.OnCatalogClickLlistener() {
+            floatCatalogView.setClickLlistener(new FloatCatalogView.OnCatalogClickListener() {
                 @Override
                 public void onCatalogItemClick(int selectedPosition) {
                     if (adapter != null) {

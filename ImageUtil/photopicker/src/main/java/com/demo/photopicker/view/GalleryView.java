@@ -463,11 +463,17 @@ public class GalleryView extends RelativeLayout {
         // 缩小
         else {
             startTranslationX = 0;
-            endTranslationX = translationX;
             startTranslationY = 0;
-            endTranslationY = translationY;
             startScale = 1;
-            endScale = scale;
+            if (this.position == firstClickItemParameterModel.index) {
+                endTranslationX = translationX;
+                endTranslationY = translationY;
+                endScale = scale;
+            } else {
+                endTranslationX = 0;
+                endTranslationY = 0;
+                endScale = 0;
+            }
             startAlpha = 0.75f;
             endAlpha = 0f;
         }

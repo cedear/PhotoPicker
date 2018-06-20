@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone"
-    android:background="@color/photo_picker_color_80000000"
+    android:background="@color/photo_picker_color_99000000"
     >
 
     <android.support.v7.widget.RecyclerView
