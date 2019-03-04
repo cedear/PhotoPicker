@@ -26,6 +26,20 @@
             android:layout_alignParentBottom="true"
             android:background="@color/photo_picker_color_99000000"
             >
+
+            <TextView
+                android:id="@+id/photo_preview_activity_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/photo_picker_dimen_15sp"
+                android:textColor="@color/photo_picker_color_EDEDED"
+                android:layout_marginLeft="@dimen/photo_picker_dimen_15dp"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="@string/photo_picker_crop"
+                android:background="@null"
+                />
+
             <RelativeLayout
                 android:id="@+id/activity_photo_preview_choose_container"
                 android:layout_width="wrap_content"

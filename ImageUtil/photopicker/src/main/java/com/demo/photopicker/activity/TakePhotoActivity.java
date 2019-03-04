@@ -3,7 +3,6 @@ package com.demo.photopicker.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -14,13 +13,11 @@ import android.widget.Toast;
 
 import com.demo.photopicker.PhotoPicker;
 import com.demo.photopicker.R;
-import com.demo.photopicker.model.PhotoInfo;
 import com.demo.photopicker.provider.PhotoProvider;
 import com.demo.photopicker.util.DeviceUtils;
 import com.demo.photopicker.util.MediaScanner;
+import com.demo.photopicker.util.PermissionsUtil;
 import com.demo.photopicker.util.PhotoUtil;
-import com.demo.photopicker.util.RandomUtil;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +33,6 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String photoPath;
     private Uri mTakePhotoUri;
     private MediaScanner mMediaScanner;
-    private RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +48,20 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private void permissionRequest() {
-
-        if (rxPermissions == null) {
-            rxPermissions = new RxPermissions(this);
-        }
-        if (rxPermissions.isGranted(Manifest.permission.CAMERA)) {
+        if (PermissionsUtil.checkPermission(this, Manifest.permission.CAMERA)) {
             takePhoto();
         } else {
-            rxPermissions
-                    .request(Manifest.permission.CAMERA)
-                    .subscribe(granted -> {
-                        if (granted) {
-                            takePhoto();
-                        } else {
-                            Toast.makeText(TakePhotoActivity.this, R.string.photo_picker_take_photo_permission_failed, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            PermissionsUtil.request(this, new PermissionsUtil.OnRequestPermissionListener() {
+                @Override
+                public void onAllow() {
+                    takePhoto();
+                }
+
+                @Override
+                public void onRefuse(boolean shouldShowRequestPermissionRationale) {
+                    toast(getString(R.string.photo_picker_take_photo_permission_failed));
+                }
+            }, Manifest.permission.CAMERA);
         }
     }
 
@@ -128,25 +122,10 @@ public class TakePhotoActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PhotoPicker.REQUEST_CODE_TAKE_PHOTO) {
-            if (resultCode == RESULT_OK && mTakePhotoUri != null) {
-                int width = 0;
-                int height = 0;
-                try {
-                    ExifInterface exifInterface = new ExifInterface(photoPath);
-                    width = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, 0);
-                    height = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_LENGTH, 0);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                final PhotoInfo info = new PhotoInfo();
-                info.setWidth(width);
-                info.setHeight(height);
-                info.setPhotoId(RandomUtil.getRandom(10000, 99999));
-                info.setPhotoPath(photoPath);
-                PhotoPicker.PHOTO_SELECT_LIST.put(photoPath, info);
+            if (resultCode == RESULT_OK && mTakePhotoUri != null  && !TextUtils.isEmpty(photoPath)) {
+                PhotoPicker.PHOTO_SELECT_LIST.add(PhotoUtil.getPhotoInfoByPath(photoPath));
                 updateGallery(photoPath);
-                PhotoPicker.sendPhoto();
+                PhotoPicker.sendPhoto(TakePhotoActivity.this);
 //                takeResult(info);
             } else {
 //                toast(getString(R.string.photo_picker_take_photo_cancel));
@@ -156,12 +135,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private boolean reuqestPermissionWriteFile(File file) {
-
-        if (rxPermissions == null) {
-            rxPermissions = new RxPermissions(this);
-        }
-
-        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (PermissionsUtil.checkPermission(this, Manifest.permission.CAMERA)) {
             try {
                 return file.createNewFile();
             } catch (IOException e) {
@@ -169,8 +143,18 @@ public class TakePhotoActivity extends AppCompatActivity {
                 return false;
             }
         } else {
-           rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-           return false;
+            PermissionsUtil.request(this, new PermissionsUtil.OnRequestPermissionListener() {
+                @Override
+                public void onAllow() {
+
+                }
+
+                @Override
+                public void onRefuse(boolean shouldShowRequestPermissionRationale) {
+
+                }
+            },Manifest.permission.CAMERA);
+            return false;
         }
     }
 

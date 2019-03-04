@@ -13,11 +13,11 @@
 
     <application>
         <activity
-            android:name="com.demo.photopicker.activity.PhotoShowActivity"
+            android:name="com.demo.photopicker.activity.show.PhotoShowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.demo.photopicker.activity.PhotoPreviewActivity"
+            android:name="com.demo.photopicker.activity.preview.PhotoPreviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -39,6 +39,10 @@
         <activity android:name="com.demo.photopicker.activity.GalleryViewActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             />
+
+        <activity android:name=".activity.crop.imaging.IMGEditActivity"
+            android:theme="@style/ImageEditTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

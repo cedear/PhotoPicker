@@ -18,6 +18,7 @@ import com.demo.photopicker.model.PhotoFolderInfo;
 
 import java.util.List;
 
+
 /**
  * Created by bjhl on 2018/6/4.
  */
@@ -28,7 +29,7 @@ public class FloatCatalogView extends FrameLayout {
     private FrameLayout container;
     private RecyclerView cataloglist;
     private FloatCatalogAdapter adapter;
-    private OnCatalogClickListener clickLlistener;
+    private OnCatalogClickLlistener clickLlistener;
 
     public FloatCatalogView(@NonNull Context context) {
         this(context, null);
@@ -45,7 +46,7 @@ public class FloatCatalogView extends FrameLayout {
         initListener();
     }
 
-    public void setClickLlistener(OnCatalogClickListener clickLlistener) {
+    public void setClickLlistener(OnCatalogClickLlistener clickLlistener) {
         this.clickLlistener = clickLlistener;
     }
 
@@ -74,6 +75,25 @@ public class FloatCatalogView extends FrameLayout {
             });
         }
         cataloglist.setAdapter(adapter);
+    }
+
+    public void notifyData(List<PhotoFolderInfo> photoFolders) {
+        if (adapter == null) {
+            adapter = new FloatCatalogAdapter(context, photoFolders);
+            adapter.setCatalogItemClickListener(new FloatCatalogAdapter.OnCatalogItemClickListener() {
+                @Override
+                public void onCatalogItemClick(int selectedPosition) {
+                    if (clickLlistener != null) {
+                        //关闭目录页
+                        toggleFloatCatalog();
+                        clickLlistener.onCatalogItemClick(selectedPosition);
+                    }
+                }
+            });
+            cataloglist.setAdapter(adapter);
+        }  else {
+            adapter.notifyData(photoFolders);
+        }
     }
 
     private void initView() {
@@ -118,7 +138,7 @@ public class FloatCatalogView extends FrameLayout {
         }
     }
 
-    public interface OnCatalogClickListener {
+    public interface OnCatalogClickLlistener {
         void onCatalogItemClick(int selectedPosition);
     }
 

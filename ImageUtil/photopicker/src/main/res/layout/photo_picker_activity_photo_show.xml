@@ -5,22 +5,31 @@
     android:layout_height="match_parent"
     android:background="@color/photo_picker_color_000000">
 
-    <include layout="@layout/photo_picker_view_toolbar"/>
+    <include
+        android:id="@+id/photo_picker_activity_image_show_include_layout"
+        layout="@layout/photo_picker_view_toolbar"/>
 
+    <ProgressBar
+        android:id="@+id/photo_picker_activity_image_show_progressBar"
+        style="@style/MyProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/photo_picker_activity_image_show_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/photo_picker_black_overlay"
-        android:layout_marginTop="@dimen/photo_picker_dimen_44dp"
+        android:layout_below="@id/photo_picker_activity_image_show_include_layout"
         android:layout_marginBottom="@dimen/photo_picker_dimen_44dp"
         />
     <com.demo.photopicker.view.FloatCatalogView
         android:id="@+id/photo_picker_activity_image_show_float_catalog_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/photo_picker_dimen_44dp"
+        android:layout_below="@id/photo_picker_activity_image_show_include_layout"
         android:layout_marginBottom="@dimen/photo_picker_dimen_44dp"/>
 
     <RelativeLayout

@@ -1,6 +1,7 @@
 package com.demo.photopicker.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.demo.photopicker.PhotoPicker;
 import com.demo.photopicker.R;
 import com.demo.photopicker.model.PhotoInfo;
+import com.demo.photopicker.util.DipPxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +77,9 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailAdapter.View
         ImageView imageView = holder.itemView.findViewById(R.id.preview_thumbnail_image_view);
         Glide.with(context).load(thumbnailList.get(position).getPhotoPath()).into(imageView);
         FrameLayout maskFrameLayout = holder.itemView.findViewById(R.id.preview_thumbnail_mask);
+        GradientDrawable drawable = (GradientDrawable)maskFrameLayout.getBackground();
+        drawable.setStroke(DipPxUtils.dip2px(context, 2), PhotoPicker.getThemeColor(context));
+
         if (clickPosition == position) {
             maskFrameLayout.setVisibility(View.VISIBLE);
         } else {

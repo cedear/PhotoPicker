@@ -27,9 +27,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PhotoPicker
                         .getPhotoPicker()
-                        .setPhotoSpanCount(4)
-                        .setMaxPhotoCounts(3)
-                        .setGetPhotoPickerCallBack(new PhotoPicker.OnGetPhotoPickerCallBack() {
+                        .setIsMultiSelectType(true)
+                        .setMaxPhotoCounts(5)
+                        .setIsPhotoPreviewWithCamera(true)
+                        .setIsOpenCropType(true)
+                        .setCompressValue(500)
+                        .setThemeColor(getResources().getColor(R.color.colorPrimaryDark))
+                        .setPhotoPickerCallBack(new PhotoPicker.OnGetPhotoPickerCallBack() {
                             @Override
                             public void onGetPhotoPickerSuccess(List<PhotoInfo> photoList) {
                                 if (adapter == null) {
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PhotoPicker.getPhotoPicker()
-                        .setGetPhotoPickerCallBack(new PhotoPicker.OnGetPhotoPickerCallBack() {
+                        .setPhotoPickerCallBack(new PhotoPicker.OnGetPhotoPickerCallBack() {
                             @Override
                             public void onGetPhotoPickerSuccess(List<PhotoInfo> photoList) {
                                 if (adapter == null) {

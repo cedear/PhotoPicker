@@ -1,31 +1,70 @@
 package com.demo.photopicker.view;
 
 import android.content.Context;
-import android.graphics.Canvas;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.demo.photopicker.R;
 import com.demo.photopicker.photointerface.GalleryPhotoInterface;
-import com.github.chrisbanes.photoview.PhotoView;
+
 
 /**
  * Created by bjhl on 2018/6/7.
  */
 
-public class GalleryPhotoView extends PhotoView {
-    private GalleryPhotoInterface photoModel;
+public class GalleryPhotoView extends RelativeLayout {
 
-    public GalleryPhotoView(Context context, GalleryPhotoInterface photoModel) {
+    private MyPhotoView myPhotoView;
+    private ProgressBar progressBar;
+    private OnPhotoViewClickListener photoViewClickListener;
+
+    public void setPhotoViewClickListener(OnPhotoViewClickListener listener) {
+        photoViewClickListener = listener;
+    }
+
+
+    public GalleryPhotoView(final Context context, final GalleryPhotoInterface photoModel) {
         super(context);
-        this.photoModel = photoModel;
+        initView(context);
+        myPhotoView.setPhotoModel(context, photoModel);
+        myPhotoView.setPhotoLoadListener(new MyPhotoView.OnPhotoLoadListener() {
+            @Override
+            public void onPhotoLoadComplete() {
+                progressBar.setVisibility(GONE);
+            }
+
+            @Override
+            public void onPhotoLoadFail() {
+                progressBar.setVisibility(GONE);
+                Toast.makeText(context, "图片加载失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        myPhotoView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (photoViewClickListener != null) {
+                    photoViewClickListener.onPhotoViewClick();
+                }
+            }
+        });
+    }
+
+    private void initView(Context context) {
+        View.inflate(context, R.layout.photo_picker_view_gallery, this);
+        progressBar = this.findViewById(R.id.photo_picker_view_gallery_progressbar);
+        myPhotoView = this.findViewById(R.id.photo_picker_view_gallery_my_photo_view);
     }
 
     public void startGlide() {
-        Glide.with(getContext()).load(photoModel.getPhotoResource()).into(GalleryPhotoView.this);
+        if (myPhotoView != null) {
+            myPhotoView.startGlide();
+        }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public interface OnPhotoViewClickListener {
+        void onPhotoViewClick();
     }
 
 }

@@ -2,11 +2,13 @@ package com.demo.photopicker.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import com.demo.photopicker.PhotoPicker;
+import com.demo.photopicker.R;
 import com.demo.photopicker.model.PhotoInfo;
 import com.demo.photopicker.view.PhotoPreviewGalleryView;
 
@@ -23,6 +25,7 @@ public class PhotoPreviewViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<PhotoInfo> dataList;
     private OnGalleryViewClickListener galleryViewClickListener;
+    private int curUpdatePager;
 
     public void setGalleryViewClickListener(OnGalleryViewClickListener listener) {
         galleryViewClickListener = listener;
@@ -49,6 +52,7 @@ public class PhotoPreviewViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        viewList.get(position).setTag(R.integer.viewpager_position, position);
         viewList.get(position).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +67,29 @@ public class PhotoPreviewViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(viewList.get(position));
+        ((ViewPager)container).removeView((PhotoPreviewGalleryView)object);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        View view = (View)object;
+        if(curUpdatePager == (Integer)view.getTag(R.integer.viewpager_position)){
+            return POSITION_NONE;
+        }else{
+            return POSITION_UNCHANGED;
+        }
+    }
+
+    //替换成裁剪图片(datalist与viewlist都替换)
+    public void updateViewPagerItem(PhotoInfo updatePhoto, int index){
+        //datalist
+        dataList.remove(index);
+        dataList.add(index, updatePhoto);
+        //viewlist
+        curUpdatePager = index;
+        viewList.remove(index);
+        viewList.add(index, new PhotoPreviewGalleryView(context, updatePhoto));
+        notifyDataSetChanged();
     }
 
     public interface OnGalleryViewClickListener{
@@ -94,5 +120,9 @@ public class PhotoPreviewViewPagerAdapter extends PagerAdapter {
 
     public PhotoInfo getCurrentItemPhotoInfo(int currentItemPosition) {
         return dataList.get(currentItemPosition);
+    }
+
+    public List<PhotoInfo> getDataList() {
+        return dataList;
     }
 }

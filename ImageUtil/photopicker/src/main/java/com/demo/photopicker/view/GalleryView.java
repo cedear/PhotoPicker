@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +12,7 @@ import android.graphics.RectF;
 import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -31,7 +33,7 @@ import com.demo.photopicker.download.GalleryDownloadThread;
 import com.demo.photopicker.model.GalleryPhotoParameterModel;
 import com.demo.photopicker.photointerface.GalleryPhotoInterface;
 import com.demo.photopicker.util.GalleryScreenUtil;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.demo.photopicker.util.PermissionsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +68,8 @@ public class GalleryView extends RelativeLayout {
     private GalleryPhotoAdapter adapter;
     private final static int WHAT_SAVE_SUCCESS = 1;
     private final static int WHAT_SAVE_FAILED = 2;
-    private RxPermissions rxPermissions;
-
     private OnGalleryViewFadedListener galleryViewFadedListener;
+    @SuppressLint("HandlerLeak")
     private android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -281,9 +282,9 @@ public class GalleryView extends RelativeLayout {
         for (int i = 0; i < photoList.size(); i++) {
             GalleryPhotoView galleryPhoto = new GalleryPhotoView(getContext(), photoList.get(i));
             viewList.add(galleryPhoto);
-            galleryPhoto.setOnClickListener(new OnClickListener() {
+            galleryPhoto.setPhotoViewClickListener(new GalleryPhotoView.OnPhotoViewClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onPhotoViewClick() {
                     //隐藏当前viewpager
                     calculateScaleAndStartZoomOutAnim();
                 }
@@ -336,21 +337,21 @@ public class GalleryView extends RelativeLayout {
     }
 
     private void checkPermission(final Activity activity) {
-        if (rxPermissions == null) {
-            rxPermissions = new RxPermissions(activity);
-        }
-        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+        if (PermissionsUtil.checkPermission((FragmentActivity) activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             saveBitmapToLocation();
         } else {
-            rxPermissions
-                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(granted -> {
-                        if (granted) {
-                            saveBitmapToLocation();
-                        } else {
-                            Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            PermissionsUtil.request((FragmentActivity) activity, new PermissionsUtil.OnRequestPermissionListener() {
+                @Override
+                public void onAllow() {
+                    saveBitmapToLocation();
+                }
+
+                @Override
+                public void onRefuse(boolean shouldShowRequestPermissionRationale) {
+                    Toast.makeText(activity, R.string.photo_picker_write_external_permission_failed, Toast.LENGTH_SHORT).show();
+                }
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
     }
 

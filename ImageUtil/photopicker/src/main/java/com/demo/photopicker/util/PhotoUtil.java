@@ -3,15 +3,18 @@ package com.demo.photopicker.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+
 
 import com.demo.photopicker.R;
 import com.demo.photopicker.model.PhotoFolderInfo;
 import com.demo.photopicker.model.PhotoInfo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +100,7 @@ public class PhotoUtil {
                         photoInfo.setPhotoPath(path);
                         photoInfo.setWidth(width);
                         photoInfo.setHeight(height);
+                        photoInfo.setFolderId(bucketId);
                         //photoInfo.setThumbPath(thumb);
                         if (allPhotoFolderInfo.getCoverPhoto() == null) {
                             allPhotoFolderInfo.setCoverPhoto(photoInfo);
@@ -136,6 +140,30 @@ public class PhotoUtil {
 //        }
         return allFolderList;
     }
+
+    public static PhotoInfo getPhotoInfoByPath(String path) {
+        if (!TextUtils.isEmpty(path)) {
+            int width = 0;
+            int height = 0;
+            try {
+                ExifInterface exifInterface = new ExifInterface(path);
+                width = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, 0);
+                height = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_LENGTH, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            final PhotoInfo info = new PhotoInfo();
+            info.setWidth(width);
+            info.setHeight(height);
+            info.setPhotoId(RandomUtil.getRandom(10000, 99999));
+            info.setPhotoPath(path);
+            return info;
+        } else {
+            return null;
+        }
+    }
+
 
 
     /**

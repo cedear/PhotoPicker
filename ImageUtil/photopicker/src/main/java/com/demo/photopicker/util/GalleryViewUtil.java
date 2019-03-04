@@ -19,24 +19,27 @@ public class GalleryViewUtil {
      * @return
      */
     public static GalleryPhotoParameterModel getGalleryPhotoParameterModel(int index, Object photoSource, ImageView clickImage) {
-        GalleryPhotoParameterModel photoParameter = new GalleryPhotoParameterModel();
-        //图片地址
-        photoParameter.photoObj = photoSource;
-        //图片在list中的索引
-        photoParameter.index = index;
-        int[] locationOnScreen = new int[2];
-        //图片位置参数
-        clickImage.getLocationOnScreen(locationOnScreen);
-        photoParameter.locOnScreen = locationOnScreen;
-        //图片的宽高
-        int width = clickImage.getDrawable().getBounds().width();
-        int height = clickImage.getDrawable().getBounds().height();
-        photoParameter.imageWidth = clickImage.getWidth();
-        photoParameter.imageHeight = clickImage.getHeight();
-        photoParameter.photoHeight = height;
-        photoParameter.photoWidth = width;
-        //scaleType
-        photoParameter.scaleType = clickImage.getScaleType();
-        return photoParameter;
+        if (photoSource != null && clickImage != null && clickImage.getDrawable() != null) {
+            GalleryPhotoParameterModel photoParameter = new GalleryPhotoParameterModel();
+            //图片地址
+            photoParameter.photoObj = photoSource;
+            //图片在list中的索引
+            photoParameter.index = index;
+            int[] locationOnScreen = new int[2];
+            //图片位置参数
+            clickImage.getLocationOnScreen(locationOnScreen);
+            photoParameter.locOnScreen = locationOnScreen;
+            //图片的宽高
+            int width = clickImage.getDrawable().getBounds().width();
+            int height = clickImage.getDrawable().getBounds().height();
+            photoParameter.imageWidth = clickImage.getWidth();
+            photoParameter.imageHeight = clickImage.getHeight();
+            photoParameter.photoHeight = height;
+            photoParameter.photoWidth = width;
+            //scaleType
+            photoParameter.scaleType = clickImage.getScaleType();
+            return photoParameter;
+        }
+        return null;
     }
 }

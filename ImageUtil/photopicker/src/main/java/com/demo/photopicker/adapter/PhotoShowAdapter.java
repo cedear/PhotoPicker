@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.demo.photopicker.PhotoPicker;
 import com.demo.photopicker.R;
-import com.demo.photopicker.activity.PhotoPreviewActivity;
+import com.demo.photopicker.activity.preview.PhotoPreviewActivity;
 import com.demo.photopicker.activity.TakePhotoActivity;
 import com.demo.photopicker.model.PhotoInfo;
 import com.demo.photopicker.util.ImageUtil;
@@ -26,23 +26,26 @@ import java.util.List;
 public class PhotoShowAdapter extends RecyclerView.Adapter<PhotoShowAdapter.ViewHolder> {
     private List<PhotoInfo> photoList;
     private Context context;
+    private int folderId;
     private OnPhotoCheckboxSelectedListener checkboxSelectedListener;
     private static final int PHOTO_ADAPTER_POSITION_CAMERA = 0;
     private static final int PHOTO_ADAPTER_POSITION_PHOTO = 1;
 
-    public void notifyData(List<PhotoInfo> list) {
+    public void notifyData(List<PhotoInfo> list, int folderId) {
         if (photoList == null) {
             photoList = new ArrayList<>();
         }
         if (photoList.size() != 0) {
             photoList.clear();
         }
+        this.folderId = folderId;
         photoList.addAll(list);
         notifyDataSetChanged();
     }
 
-    public PhotoShowAdapter(Context context, List<PhotoInfo> list) {
+    public PhotoShowAdapter(Context context, List<PhotoInfo> list, int folderId) {
         this.context = context;
+        this.folderId = folderId;
         if (photoList == null) {
             photoList = new ArrayList<>();
         }
@@ -112,7 +115,7 @@ public class PhotoShowAdapter extends RecyclerView.Adapter<PhotoShowAdapter.View
 
             if (PhotoPicker.getLimitPhotoCount() != 0) {
                 checkBox.setVisibility(View.VISIBLE);
-                boolean checked = PhotoPicker.PHOTO_SELECT_LIST.containsKey(photoInfo.getPhotoPath());
+                boolean checked = PhotoPicker.PHOTO_SELECT_LIST.contains(photoInfo);
                 if (checked) {
                     checkBox.setSelected(true);
                 } else {
@@ -123,14 +126,14 @@ public class PhotoShowAdapter extends RecyclerView.Adapter<PhotoShowAdapter.View
                     public void onClick(View view) {
                         if (PhotoPicker.PHOTO_SELECT_LIST.size() < PhotoPicker.getLimitPhotoCount()) {
                             if (!checkBox.isSelected()) {
-                                PhotoPicker.PHOTO_SELECT_LIST.put(photoInfo.getPhotoPath(), photoInfo);
+                                PhotoPicker.PHOTO_SELECT_LIST.add(photoInfo);
                             } else {
-                                PhotoPicker.PHOTO_SELECT_LIST.remove(photoInfo.getPhotoPath());
+                                PhotoPicker.PHOTO_SELECT_LIST.remove(photoInfo);
                             }
                             checkBox.setSelected(!checkBox.isSelected());
                         } else {
                             if (checkBox.isSelected()) {
-                                PhotoPicker.PHOTO_SELECT_LIST.remove(photoInfo.getPhotoPath());
+                                PhotoPicker.PHOTO_SELECT_LIST.remove(photoInfo);
                                 checkBox.setSelected(false);
                             } else {
                                 Toast.makeText(context, "最多只能选择" + PhotoPicker.getLimitPhotoCount() + "张图片", Toast.LENGTH_SHORT).show();
@@ -141,16 +144,14 @@ public class PhotoShowAdapter extends RecyclerView.Adapter<PhotoShowAdapter.View
                         }
                     }
                 });
-            } else
-
-            {
+            } else {
                 checkBox.setVisibility(View.GONE);
             }
             ImageUtil.with(context).placeholder(R.drawable.photo_picker_ic_placeholder).load(photoInfo.getPhotoPath(), imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PhotoPreviewActivity.startWithWholeCatalog(context, (ArrayList<PhotoInfo>) photoList, photoInfo.getPhotoPath());
+                    PhotoPreviewActivity.startWithWholeCatalog(context, folderId, photoInfo.getPhotoPath());
                 }
             });
         }

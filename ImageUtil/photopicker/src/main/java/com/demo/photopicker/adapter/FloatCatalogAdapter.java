@@ -36,6 +36,14 @@ public class FloatCatalogAdapter extends RecyclerView.Adapter<FloatCatalogAdapte
         mAllPhotoFolders.addAll(list);
     }
 
+    public void notifyData(List<PhotoFolderInfo> photoFolders) {
+        if (mAllPhotoFolders != null && mAllPhotoFolders.size() != 0) {
+            mAllPhotoFolders.clear();
+        }
+        mAllPhotoFolders.addAll(photoFolders);
+        notifyDataSetChanged();
+    }
+
 
     public void setCatalogItemClickListener(OnCatalogItemClickListener clickListener) {
         this.clickListener = clickListener;
