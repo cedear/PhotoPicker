@@ -62,7 +62,8 @@ public interface OnGetPhotoPickerCallBack {
 ```
             PhotoPicker.getPhotoPicker()
 ```  
-![image](https://github.com/cedear/Cedear.github.io/blob/master/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E5%A4%B9/xiangjipaizhao.gif)
+![image](https://github.com/cedear/Cedear.github.io/blob/master/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E5%A4%B9/xiangjipaizhao.gif)  
+
 **2. 设置回调**  
 
 ```
