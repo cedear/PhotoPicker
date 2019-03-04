@@ -1,5 +1,5 @@
 ## PhotoPicker使用说明书  
-PhotoPicker是一款高仿微信的图片选取基础库，逼真程度高达99.9%。主要功能包括：从相册选取图片和调用相机拍照。 (其中图片编辑参考了kareluo的方案，这是大佬的blog:https://github.com/kareluo/Imaging) 
+PhotoPicker是一款高仿微信的图片选取基础库，逼真程度高达99.9%。主要功能包括：从相册选取图片和调用相机拍照。 (其中图片编辑参考了kareluo的方案，这是大佬的github:https://github.com/kareluo/Imaging) 
 ### 如何使用  
 #### 图片选取功能  
  **1. 获取PhotoPicker实例 ** 
