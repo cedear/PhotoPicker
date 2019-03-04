@@ -1,5 +1,5 @@
 ## PhotoPicker使用说明书  
-PhotoPicker是一款高仿微信的图片选取基础库，逼真程度高达99.9%。主要功能包括：从相册选取图片（裁剪、涂鸦、马赛克、添加文字、图片压缩）和调用相机拍照。  
+PhotoPicker是一款高仿微信的图片选取基础库，逼真程度高达99.9%。主要功能包括：从相册选取图片和调用相机拍照。 (其中图片编辑参考了kareluo的方案，这是大佬的blog:https://github.com/kareluo/Imaging) 
 ### 如何使用  
 #### 图片选取功能  
  **1. 获取PhotoPicker实例 ** 
@@ -37,7 +37,7 @@ PhotoPicker是一款高仿微信的图片选取基础库，逼真程度高达99.
 **setThemeColor：** 主题颜色，主要是相关按钮、背景、边框的颜色（默认颜色为FF6C00）  
 **setPhotoSpanCount：** 图片展示时，采用几列展示方式展示。  
 **setIsPhotoPreviewWithCamera:** 在图片展示页面的第一个位置是否为照相机（默认是不展示）  
-**setIsOpenCropType：** 是否开启图片编辑选项（裁剪、马赛克、文字、涂鸦。默认不开启）  
+**setIsOpenCropType：** 是否开启图片编辑选项（裁剪、马赛克、文字、涂鸦。）  
 **setCompressValue：** 是否开启图片压缩（当value > 0则认为开启压缩，返回的则为压缩过的图片）
 **setGetPhotoPickerCallBack：** 设置选择图片和拍照后的回调，返回从相册选择的或拍的图片。  
 
